@@ -5,20 +5,9 @@ const jwt = require('jsonwebtoken');
 const users = [
   {
     id: 1,
-    email: 'professor@universidade.edu.br',
-    password: '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // senha123
-    name: 'João Silva',
-    type: 'professor',
-    department: 'Ciência da Computação',
-    failedAttempts: 0,
-    isBlocked: false,
-    blockedUntil: null
-  },
-  {
-    id: 2,
-    email: 'aluno@universidade.edu.br',
-    password: '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // senha123
-    name: 'Maria Santos',
+    email: 'aluno1@universidade.edu.br',
+    password: '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // 123456
+    name: 'Aluno 1',
     type: 'aluno',
     course: 'Engenharia de Software',
     registration: '2023001',
@@ -27,11 +16,25 @@ const users = [
     blockedUntil: null
   },
   {
+    id: 2,
+    email: 'aluno2@universidade.edu.br',
+    password: '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // 654321
+    name: 'Aluno 2',
+    type: 'aluno',
+    course: 'Ciência da Computação',
+    registration: '2023002',
+    failedAttempts: 0,
+    isBlocked: false,
+    blockedUntil: null
+  },
+  {
     id: 3,
-    email: 'admin@universidade.edu.br',
-    password: '$2a$10$rQZ8K9mN2pL1vX3yU6wA7eB4cF5gH8iJ9kL0mN1oP2qR3sT4uV5wX6yZ7', // admin123
-    name: 'Administrador Sistema',
-    type: 'admin',
+    email: 'aluno3@universidade.edu.br',
+    password: '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // 987654
+    name: 'Aluno 3',
+    type: 'aluno',
+    course: 'Sistemas de Informação',
+    registration: '2023003',
     failedAttempts: 0,
     isBlocked: false,
     blockedUntil: null

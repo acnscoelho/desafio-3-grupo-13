@@ -10,7 +10,6 @@ API REST desenvolvida em JavaScript com Express para autenticação de usuários
 - ✅ **Login inválido**: Tratamento de credenciais incorretas
 - ✅ **Bloqueio de conta**: Bloqueia a conta após 3 tentativas de login inválidas
 - ✅ **Lembrar senha**: Funcionalidade para recuperação de senha
-- ✅ **Documentação Swagger**: API documentada e testável
 
 ## Tecnologias Utilizadas
 
@@ -25,19 +24,15 @@ API REST desenvolvida em JavaScript com Express para autenticação de usuários
 ## Instalação
 
 1. Clone o repositório
+```bash
+git clone https://github.com/emanuelefraga/desafio-3-grupo-13.git
+```
 2. Instale as dependências:
 ```bash
 npm install
 ```
 
 ## Executando o Projeto
-
-### Desenvolvimento
-```bash
-npm run dev
-```
-
-### Produção
 ```bash
 npm start
 ```
@@ -52,10 +47,8 @@ http://localhost:3001
 ### Endpoints Disponíveis
 
 - `POST /api/auth/login` - Realizar login
-- `POST /api/auth/logout` - Fazer logout
 - `POST /api/auth/remember-password` - Solicitar lembrança de senha
 - `GET /api/auth/status` - Verificar status da conta
-- `GET /api/docs` - Documentação Swagger
 
 ## Documentação Swagger
 
@@ -68,20 +61,23 @@ http://localhost:3001/api/docs
 
 ### Usuários Cadastrados (em memória)
 
-1. **Professor**
-   - Email: `professor@universidade.edu.br`
-   - Senha: `senha123`
-   - Tipo: `professor`
-
-2. **Aluno**
-   - Email: `aluno@universidade.edu.br`
-   - Senha: `senha123`
+1. **Aluno 1**
+   - Email: `aluno1@universidade.edu.br`
+   - Senha: `123456`
    - Tipo: `aluno`
+   - Curso: `Engenharia de Software`
 
-3. **Administrador**
-   - Email: `admin@universidade.edu.br`
-   - Senha: `admin123`
-   - Tipo: `admin`
+2. **Aluno 2**
+   - Email: `aluno2@universidade.edu.br`
+   - Senha: `654321`
+   - Tipo: `aluno`
+   - Curso: `Ciência da Computação`
+
+3. **Aluno 3**
+   - Email: `aluno3@universidade.edu.br`
+   - Senha: `987654`
+   - Tipo: `aluno`
+   - Curso: `Sistemas de Informação`
 
 ## Estrutura do Projeto
 
@@ -89,14 +85,14 @@ http://localhost:3001/api/docs
 ├── server.js              # Servidor principal
 ├── package.json           # Dependências e scripts
 ├── README.md             # Documentação
-├── .env                  # Variáveis de ambiente
 ├── .gitignore           # Arquivos ignorados pelo Git
 └── src/
     ├── routes/
     │   └── auth.js       # Rotas de autenticação
     ├── middleware/
     │   ├── auth.js       # Middleware de autenticação
-    │   └── rateLimit.js  # Limitação de taxa
+    │   ├── rateLimit.js  # Limitação de taxa
+    │   └── methodNotAllowed.js # Validação de métodos HTTP
     ├── services/
     │   └── authService.js # Lógica de negócio
     └── config/
