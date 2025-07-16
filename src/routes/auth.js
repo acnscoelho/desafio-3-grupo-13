@@ -3,6 +3,7 @@ const router = express.Router();
 const authService = require('../services/authService');
 const { authenticateToken, requireAdmin } = require('../middleware/auth');
 const { loginLimiter, passwordReminderLimiter } = require('../middleware/rateLimit');
+const methodNotAllowed = require('../middleware/methodNotAllowed');
 
 /**
  * @swagger
@@ -149,6 +150,27 @@ const { loginLimiter, passwordReminderLimiter } = require('../middleware/rateLim
  *                 code:
  *                   type: string
  *                   example: "ACCOUNT_BLOCKED"
+ *       405:
+ *         description: Método não permitido
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Método não permitido para este endpoint"
+ *                 code:
+ *                   type: string
+ *                   example: "METHOD_NOT_ALLOWED"
+ *                 allowedMethods:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                   example: ["POST"]
  */
 router.post('/login', loginLimiter, async (req, res) => {
   try {
@@ -187,7 +209,7 @@ router.post('/login', loginLimiter, async (req, res) => {
  * /api/auth/remember-password:
  *   post:
  *     summary: Solicitar lembrança de senha
- *     description: Envia um email de recuperação de senha (simulado)
+ *     description: Envia um email de recuperação de senha.
  *     tags: [Login]
  *     requestBody:
  *       required: true
@@ -225,7 +247,27 @@ router.post('/login', loginLimiter, async (req, res) => {
  *                 code:
  *                   type: string
  *                   example: "EMAIL_NOT_FOUND"
-
+ *       405:
+ *         description: Método não permitido
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Método não permitido para este endpoint"
+ *                 code:
+ *                   type: string
+ *                   example: "METHOD_NOT_ALLOWED"
+ *                 allowedMethods:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                   example: ["POST"]
  */
 router.post('/remember-password', passwordReminderLimiter, (req, res) => {
   try {
@@ -296,6 +338,27 @@ router.post('/remember-password', passwordReminderLimiter, (req, res) => {
  *                 code:
  *                   type: string
  *                   example: "USER_NOT_FOUND"
+ *       405:
+ *         description: Método não permitido
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Método não permitido para este endpoint"
+ *                 code:
+ *                   type: string
+ *                   example: "METHOD_NOT_ALLOWED"
+ *                 allowedMethods:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                   example: ["GET"]
  */
 router.get('/status', (req, res) => {
   try {
@@ -327,71 +390,21 @@ router.get('/status', (req, res) => {
   }
 });
 
-/**
- * @swagger
- * /api/auth/users:
- *   get:
- *     summary: Listar todos os usuários (Apenas Admin)
- *     description: Retorna a lista de todos os usuários cadastrados no sistema. Somente usuários com perfil de administrador estão autorizados a acessar este endpoint.
- *     tags: [Administração]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: Lista de usuários
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 success:
- *                   type: boolean
- *                   example: true
- *                 users:
- *                   type: array
- *                   items:
- *                     type: object
- *                     properties:
- *                       id:
- *                         type: number
- *                         example: 1
- *                       email:
- *                         type: string
- *                         example: "professor@universidade.edu.br"
- *                       name:
- *                         type: string
- *                         example: "João Silva"
- *                       type:
- *                         type: string
- *                         example: "professor"
- *                       isBlocked:
- *                         type: boolean
- *                         example: false
- *                       failedAttempts:
- *                         type: number
- *                         example: 0
- *       401:
- *         description: Não autorizado
- *       403:
- *         description: Acesso negado - apenas administradores
- */
-router.get('/users', authenticateToken, requireAdmin, (req, res) => {
-  try {
-    const users = authService.getAllUsers();
-    
-    return res.status(200).json({
-      success: true,
-      users
-    });
+// Retorno 405 para métodos não permitidos
+router.get('/login', methodNotAllowed(['POST']));
+router.put('/login', methodNotAllowed(['POST']));
+router.delete('/login', methodNotAllowed(['POST']));
+router.patch('/login', methodNotAllowed(['POST']));
 
-  } catch (error) {
-    console.error('Erro ao listar usuários:', error);
-    return res.status(500).json({
-      success: false,
-      message: 'Erro interno do servidor',
-      code: 'INTERNAL_ERROR'
-    });
-  }
-});
+router.post('/remember-password', methodNotAllowed(['POST']));
+router.put('/remember-password', methodNotAllowed(['POST']));
+router.delete('/remember-password', methodNotAllowed(['POST']));
+router.patch('/remember-password', methodNotAllowed(['POST']));
+
+router.post('/status', methodNotAllowed(['GET']));
+router.put('/status', methodNotAllowed(['GET']));
+router.delete('/status', methodNotAllowed(['GET']));
+router.patch('/status', methodNotAllowed(['GET']));
+
 
 module.exports = router; 
