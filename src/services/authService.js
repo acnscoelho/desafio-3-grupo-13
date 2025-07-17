@@ -6,7 +6,7 @@ const users = [
   {
     id: 1,
     email: 'aluno1@universidade.edu.br',
-    password: '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // 123456
+    password: '$2a$10$NfGh./FkINELNLtVm9Brweyln2Z6jhQp3zIWzWONkT47SpQE0/xWy', // 123456
     name: 'Aluno 1',
     type: 'aluno',
     course: 'Engenharia de Software',
@@ -18,7 +18,7 @@ const users = [
   {
     id: 2,
     email: 'aluno2@universidade.edu.br',
-    password: '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // 654321
+    password: '$2a$10$guirU9T7n0FumtuwEoD8cez9rqfs7u2Hh6E7HNkyNREdVf1lPNRUi', // 654321
     name: 'Aluno 2',
     type: 'aluno',
     course: 'Ciência da Computação',
@@ -30,7 +30,7 @@ const users = [
   {
     id: 3,
     email: 'aluno3@universidade.edu.br',
-    password: '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // 987654
+    password: '$2a$10$n6AjkNjblYLTVp99PR8ZlOEtMOLkqhwpv43BfyZNS/cbxnbY8qsU6', // 987654
     name: 'Aluno 3',
     type: 'aluno',
     course: 'Sistemas de Informação',

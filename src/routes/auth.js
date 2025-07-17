@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const authService = require('../services/authService');
 const { authenticateToken, requireAdmin } = require('../middleware/auth');
-const { loginLimiter, passwordReminderLimiter } = require('../middleware/rateLimit');
+const { loginLimiter } = require('../middleware/rateLimit');
 const methodNotAllowed = require('../middleware/methodNotAllowed');
 
 /**
@@ -19,11 +19,11 @@ const methodNotAllowed = require('../middleware/methodNotAllowed');
  *           type: string
  *           format: email
  *           description: Email do usuário
- *           example: "professor@universidade.edu.br"
+ *           example: "aluno1@universidade.edu.br"
  *         password:
  *           type: string
  *           description: Senha do usuário
- *           example: "senha123"
+ *           example: "123456"
  *     LoginResponse:
  *       type: object
  *       properties:
@@ -51,7 +51,7 @@ const methodNotAllowed = require('../middleware/methodNotAllowed');
  *           type: string
  *           format: email
  *           description: Email do usuário
- *           example: "professor@universidade.edu.br"
+ *           example: "aluno1@universidade.edu.br"
  *     AccountStatusResponse:
  *       type: object
  *       properties:
@@ -108,13 +108,13 @@ const methodNotAllowed = require('../middleware/methodNotAllowed');
  *                       example: 1
  *                     email:
  *                       type: string
- *                       example: "professor@universidade.edu.br"
+ *                       example: "aluno1@universidade.edu.br"
  *                     name:
  *                       type: string
- *                       example: "João Silva"
+ *                       example: "Aluno 1"
  *                     type:
  *                       type: string
- *                       example: "professor"
+ *                       example: "aluno"
  *       400:
  *         description: Credenciais inválidas
  *         content:
@@ -269,7 +269,7 @@ router.post('/login', loginLimiter, async (req, res) => {
  *                     type: string
  *                   example: ["POST"]
  */
-router.post('/remember-password', passwordReminderLimiter, (req, res) => {
+router.post('/remember-password', (req, res) => {
   try {
     const { email } = req.body;
 
@@ -314,7 +314,7 @@ router.post('/remember-password', passwordReminderLimiter, (req, res) => {
  *           format: email
  *         required: true
  *         description: Email do usuário
- *         example: "professor@universidade.edu.br"
+ *         example: "aluno1@universidade.edu.br"
  *     responses:
  *       200:
  *         description: Status da conta

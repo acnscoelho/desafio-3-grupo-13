@@ -38,8 +38,8 @@ async function runTests() {
   // Teste 1: Login com sucesso
   console.log('1️⃣ Testando login com sucesso...');
   const loginSuccess = await makeRequest('POST', '/api/auth/login', {
-    email: 'professor@universidade.edu.br',
-    password: 'senha123'
+    email: 'aluno1@universidade.edu.br',
+    password: '123456'
   });
   console.log('Resultado:', JSON.stringify(loginSuccess, null, 2));
   console.log('');
@@ -47,7 +47,7 @@ async function runTests() {
   // Teste 2: Login com credenciais inválidas
   console.log('2️⃣ Testando login com credenciais inválidas...');
   const loginInvalid = await makeRequest('POST', '/api/auth/login', {
-    email: 'professor@universidade.edu.br',
+    email: 'aluno1@universidade.edu.br',
     password: 'senha_errada'
   });
   console.log('Resultado:', JSON.stringify(loginInvalid, null, 2));
@@ -55,34 +55,35 @@ async function runTests() {
 
   // Teste 3: Verificar status da conta
   console.log('3️⃣ Verificando status da conta...');
-  const accountStatus = await makeRequest('GET', '/api/auth/status?email=professor@universidade.edu.br');
+  const accountStatus = await makeRequest('GET', '/api/auth/status?email=aluno1@universidade.edu.br');
   console.log('Resultado:', JSON.stringify(accountStatus, null, 2));
   console.log('');
 
   // Teste 4: Lembrar senha
   console.log('4️⃣ Testando funcionalidade de lembrar senha...');
   const rememberPassword = await makeRequest('POST', '/api/auth/remember-password', {
-    email: 'aluno@universidade.edu.br'
+    email: 'aluno2@universidade.edu.br'
   });
   console.log('Resultado:', JSON.stringify(rememberPassword, null, 2));
   console.log('');
 
-  // Teste 5: Login com admin
-  console.log('5️⃣ Testando login com administrador...');
-  const adminLogin = await makeRequest('POST', '/api/auth/login', {
-    email: 'admin@universidade.edu.br',
-    password: 'admin123'
+  // Teste 5: Login com outro aluno
+  console.log('5️⃣ Testando login com outro aluno...');
+  const aluno2Login = await makeRequest('POST', '/api/auth/login', {
+    email: 'aluno2@universidade.edu.br',
+    password: '654321'
   });
-  console.log('Resultado:', JSON.stringify(adminLogin, null, 2));
+  console.log('Resultado:', JSON.stringify(aluno2Login, null, 2));
   console.log('');
 
-  // Teste 6: Listar usuários (apenas admin)
-  if (adminLogin.success && adminLogin.token) {
-    console.log('6️⃣ Testando listagem de usuários (apenas admin)...');
-    const listUsers = await makeRequest('GET', '/api/auth/users', null, adminLogin.token);
-    console.log('Resultado:', JSON.stringify(listUsers, null, 2));
-    console.log('');
-  }
+  // Teste 6: Login com terceiro aluno
+  console.log('6️⃣ Testando login com terceiro aluno...');
+  const aluno3Login = await makeRequest('POST', '/api/auth/login', {
+    email: 'aluno3@universidade.edu.br',
+    password: '987654'
+  });
+  console.log('Resultado:', JSON.stringify(aluno3Login, null, 2));
+  console.log('');
 
   // Teste 7: Logout
   if (loginSuccess.success && loginSuccess.token) {
