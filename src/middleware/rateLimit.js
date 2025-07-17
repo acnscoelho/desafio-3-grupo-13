@@ -36,27 +36,7 @@ const apiLimiter = rateLimit({
   legacyHeaders: false
 });
 
-/**
- * Rate limiter para solicitações de lembrança de senha
- * Limita a 3 solicitações por email por hora
- */
-const passwordReminderLimiter = rateLimit({
-  windowMs: 60 * 60 * 1000, // 1 hora
-  max: 3, // máximo 3 solicitações
-  message: {
-    success: false,
-    message: 'Muitas solicitações de lembrança de senha. Tente novamente em 1 hora.',
-    code: 'RATE_LIMIT_EXCEEDED'
-  },
-  standardHeaders: true,
-  legacyHeaders: false,
-  keyGenerator: (req) => {
-    return req.body.email || req.ip;
-  }
-});
-
 module.exports = {
   loginLimiter,
-  apiLimiter,
-  passwordReminderLimiter
+  apiLimiter
 }; 

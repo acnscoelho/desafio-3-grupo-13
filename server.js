@@ -34,9 +34,9 @@ app.get('/', (req, res) => {
       docs: '/api/docs'
     },
     users: {
-      professor: 'professor@universidade.edu.br / senha123',
-      aluno: 'aluno@universidade.edu.br / senha123',
-      admin: 'admin@universidade.edu.br / admin123'
+      aluno1: 'aluno1@universidade.edu.br / 123456',
+      aluno2: 'aluno2@universidade.edu.br / 654321',
+      aluno3: 'aluno3@universidade.edu.br / 987654'
     }
   });
 });
@@ -100,9 +100,9 @@ app.listen(PORT, () => {
   console.log(`🔐 Endpoints de autenticação: http://localhost:${PORT}/api/auth`);
   console.log('');
   console.log('👥 Usuários de teste:');
-  console.log('   Professor: professor@universidade.edu.br / senha123');
-  console.log('   Aluno: aluno@universidade.edu.br / senha123');
-  console.log('   Admin: admin@universidade.edu.br / admin123');
+  console.log('   Aluno 1: aluno1@universidade.edu.br / 123456');
+  console.log('   Aluno 2: aluno2@universidade.edu.br / 654321');
+  console.log('   Aluno 3: aluno3@universidade.edu.br / 987654');
   console.log('');
   console.log('⚠️  ATENÇÃO: Esta API é destinada apenas para estudos de teste de software.');
   console.log('   Não utilize em ambiente de produção.');
