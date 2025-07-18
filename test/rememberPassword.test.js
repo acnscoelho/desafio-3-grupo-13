@@ -12,6 +12,8 @@ describe('POST /rememberPassword ', () => {
             .set('Content-Type', 'application/json')
             .send(bodyRememberPassword)
         expect(resposta.status).to.equal(200);
-        console.log(resposta.body)
+        expect(resposta.body.success).to.equal(true);
+        expect(resposta.body.message).to.equal('Email de recuperação enviado');
+        expect(resposta.body.message).to.be.a('string');
     })
 })
