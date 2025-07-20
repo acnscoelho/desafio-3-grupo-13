@@ -4,7 +4,7 @@ require('dotenv').config();
 const postRememberPassword = require('../fixtures/postRememberPassword.json');
 
 describe('POST /rememberPassword ', () => {
-    it ('Deve retornar 200 quando quando e-mail de recuperação de senha for enviado', async () => {
+    it ('Deve retornar 200 quando e-mail de recuperação de senha for enviado', async () => {
         const bodyRememberPassword = { ...postRememberPassword } //clone
         
         const resposta = await request(process.env.BASE_URL)
