@@ -5,6 +5,7 @@ const { authenticateToken, requireAdmin } = require('../middleware/auth');
 const { loginLimiter } = require('../middleware/rateLimit');
 const methodNotAllowed = require('../middleware/methodNotAllowed');
 
+
 /**
  * @swagger
  * components:
@@ -396,7 +397,7 @@ router.put('/login', methodNotAllowed(['POST']));
 router.delete('/login', methodNotAllowed(['POST']));
 router.patch('/login', methodNotAllowed(['POST']));
 
-router.post('/remember-password', methodNotAllowed(['POST']));
+router.get('/remember-password', methodNotAllowed(['POST']));
 router.put('/remember-password', methodNotAllowed(['POST']));
 router.delete('/remember-password', methodNotAllowed(['POST']));
 router.patch('/remember-password', methodNotAllowed(['POST']));
