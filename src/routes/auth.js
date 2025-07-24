@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const authService = require('../services/authService');
 const { authenticateToken, requireAdmin } = require('../middleware/auth');
-const { loginLimiter } = require('../middleware/rateLimit');
+const { checkAccountBlocked, loginLimiter } = require('../middleware/rateLimit');
 const methodNotAllowed = require('../middleware/methodNotAllowed');
 
 
@@ -173,7 +173,7 @@ const methodNotAllowed = require('../middleware/methodNotAllowed');
  *                     type: string
  *                   example: ["POST"]
  */
-router.post('/login', loginLimiter, async (req, res) => {
+router.post('/login', checkAccountBlocked, async (req, res) => {
   try {
     const { email, password } = req.body;
 
