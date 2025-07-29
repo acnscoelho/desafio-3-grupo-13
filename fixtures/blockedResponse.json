@@ -1,0 +1,5 @@
+{
+    "success": false,
+    "message": "Conta bloqueada após 3 tentativas de login com credenciais inválidas. Bloqueio por 5 minutos.",
+    "code": "ACCOUNT_BLOCKED"
+} 

@@ -1,0 +1,11 @@
+{
+    "success": true,
+    "message": "Login realizado com sucesso",
+    "token": "",
+    "user": {
+        "id": 0,
+        "email": "aluno1@universidade.edu.br",
+        "name": "",
+        "type": ""
+    }
+} 
