@@ -2,25 +2,34 @@ const request = require('supertest');
 const { expect } = require('chai');
 require('dotenv').config();
 const postLogin = require('../fixtures/postLogin.json');
+const loginResponse = require('../fixtures/loginResponse.json');
+const blockedResponse = require('../fixtures/blockedResponse.json');
 
 describe('POST /login', () => {
     it('Deve retornar 200 quando e-mail e senha forem enviados', async ()=> {
+        // Arrange (Preparar)
         const bodyLogin = { ...postLogin };
+        const respostaEsperada = { ...loginResponse };
             
+        // Act (Agir)
         const resposta = await request(process.env.BASE_URL)
             .post('/api/auth/login')
             .set('Content-Type', 'application/json')
             .send(bodyLogin);
             
+        // Assert (Verificar)
         expect(resposta.status).to.equal(200);
-        expect(resposta.body.success).to.equal(true);
-        expect(resposta.body.message).to.equal('Login realizado com sucesso');
-        expect(resposta.body).to.have.property('token').that.is.a('string');
-        expect(resposta.body).to.have.property('user').that.is.an('object');
-        expect(resposta.body.user).to.have.property('id').that.is.a('number');
-        expect(resposta.body.user).to.have.property('email').that.is.a('string');
-        expect(resposta.body.user).to.have.property('name').that.is.a('string');
-        expect(resposta.body.user).to.have.property('type').that.is.a('string');
+        
+        // Validar valores fixos usando o fixture
+        expect(resposta.body.success).to.equal(respostaEsperada.success);
+        expect(resposta.body.message).to.equal(respostaEsperada.message);
+        expect(resposta.body.user.email).to.equal(respostaEsperada.user.email);
+        
+        // Validar tipos dos campos dinâmicos
+        expect(resposta.body.token).to.be.a('string').and.to.not.be.empty;
+        expect(resposta.body.user.id).to.be.a('number');
+        expect(resposta.body.user.name).to.be.a('string');
+        expect(resposta.body.user.type).to.be.a('string');
     })
 
     
@@ -92,29 +101,26 @@ it('Deve retornar 400 quando informar credencial de senha inválida', async ()=>
         expect(resposta7.body.allowedMethods).to.deep.equal(["POST"]);
     })
 
-        it('Deve retornar 423 quando for bloqueado após 3 tentativas de login com credenciais inválidas', async ()=> {
-        const bodyLogin = { ...postLogin };
-        bodyLogin.email = 'aluno2@universidade.edu.br'
+it('Deve retornar 423 quando for bloqueado após 3 tentativas de login com credenciais inválidas', async ()=> {
+    // Arrange (Preparar)
+    const bodyLogin = { ...postLogin };
+    bodyLogin.email = 'aluno2@universidade.edu.br'
+    const respostaEsperada = { ...blockedResponse };
+    let ultimaResposta;
 
-        const resposta1 = await request(process.env.BASE_URL)
+    // Act (Agir) - Fazer 3 tentativas de login
+    for (let tentativa = 1; tentativa <= 3; tentativa++) {
+        ultimaResposta = await request(process.env.BASE_URL)
             .post('/api/auth/login')
             .set('Content-Type', 'application/json')
             .send(bodyLogin);
-            
-        const resposta2 = await request(process.env.BASE_URL)
-            .post('/api/auth/login')
-            .set('Content-Type', 'application/json')
-            .send(bodyLogin);
-            
-        const resposta3 = await request(process.env.BASE_URL)
-            .post('/api/auth/login')
-            .set('Content-Type', 'application/json')
-            .send(bodyLogin);
+    }
 
-        expect(resposta3.status).to.equal(423);
-        expect(resposta3.body.success).to.equal(false);
-        expect(resposta3.body.message).to.equal('Conta bloqueada após 3 tentativas de login com credenciais inválidas. Bloqueio por 5 minutos.');
-        expect(resposta3.body.code).to.equal('ACCOUNT_BLOCKED');
+    // Assert (Verificar) - A terceira tentativa deve resultar em bloqueio
+    expect(ultimaResposta.status).to.equal(423);
+    expect(ultimaResposta.body.success).to.equal(respostaEsperada.success);
+    expect(ultimaResposta.body.message).to.equal(respostaEsperada.message);
+    expect(ultimaResposta.body.code).to.equal(respostaEsperada.code);
     });
 
 })
